@@ -13,9 +13,10 @@
         %div.card-body
           %div.card-text.text-left
             = simple_format(@article.description)
-          = link_to 'Edit', edit_article_path(@article), class: "btn btn-outline-info"
-          = link_to 'Delete', article_path(@article), class: "btn btn-outline-danger",
-          method: :delete, data: { confirm: "Are you sure?" }
+          - if logged_in? && @article.user == current_user
+            = link_to 'Edit', edit_article_path(@article), class: "btn btn-outline-info"
+            = link_to 'Delete', article_path(@article), class: "btn btn-outline-danger",
+            method: :delete, data: { confirm: "Are you sure?" }
 
         %div.card-footer.text-muted
           %small
