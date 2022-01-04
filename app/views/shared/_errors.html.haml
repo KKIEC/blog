@@ -1,9 +1,11 @@
-- if @article.errors.any?
+- if obj.errors.any?
   %div.alert.alert-danger.alert-dismissible.fade.show{ role: "alert" }
     %h4.alert-heading
-      The following errors prevented the article from being saved:
+      The following errors prevented the
+      = obj.class.name.downcase
+      from being saved:
     %ul
-      - @article.errors.full_messages.each do |msg|
+      - obj.errors.full_messages.each do |msg|
         %li
           = msg
     %button.close{ type: "button", "data-dismiss" => "alert", "aria-label" => "Close" }

@@ -1,0 +1,13 @@
+%h1.text-center.mt-4
+  = @user.username
+  's profile
+
+= gravatar_for @user, size: 200
+
+%div.text-center.mt-4
+  = link_to 'Edit your profile', edit_user_path(@user), class: "btn btn-outline-info"
+
+%h3.text-center.mt-4
+  Articles:
+
+= render 'articles/article'
