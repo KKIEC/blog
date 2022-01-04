@@ -1,7 +1,14 @@
 %div.container
   - flash.each do |name, msg|
-    %div.alert.alert-success.alert-dismissible.fade.show{ role: "alert" }
-      = msg
-      %button.close{ type: "button", "data-dismiss" => "alert", "aria-label" => "Close" }
-        %span{ "aria-hidden" => "true" }
-          &times;
+    - if name == "notice"
+      %div.alert.alert-success.alert-dismissible.fade.show{ role: "alert" }
+        = msg
+        %button.close{ type: "button", "data-dismiss" => "alert", "aria-label" => "Close" }
+          %span{ "aria-hidden" => "true" }
+            &times;
+    - else
+      %div.alert.alert-danger.alert-dismissible.fade.show{ role: "alert" }
+        = msg
+        %button.close{ type: "button", "data-dismiss" => "alert", "aria-label" => "Close" }
+          %span{ "aria-hidden" => "true" }
+            &times;
