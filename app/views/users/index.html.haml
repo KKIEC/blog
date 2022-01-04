@@ -1,6 +1,8 @@
 %h1.text-center.mt-4
   Alpha Bloggers
 
+%div.flickr_pagination
+  = will_paginate @articles, container: false
 
 %div.container
   - @users.each do |user|
@@ -21,3 +23,6 @@
               Joined
               = time_ago_in_words(user.created_at)
               ago
+
+%div.flickr_pagination.mb-4
+  = will_paginate @articles, container: false
