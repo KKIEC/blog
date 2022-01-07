@@ -3,8 +3,7 @@ class ArticlesController < ApplicationController
   before_action :require_user, except: %i[show index]
   before_action :require_same_user, only: %i[edit update destroy]
 
-  def show
-  end
+  def show; end
 
   def index
     @articles = Article.paginate(page: params[:page], per_page: 5)
@@ -14,8 +13,7 @@ class ArticlesController < ApplicationController
     @article = Article.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @article = Article.new(article_params)
@@ -53,9 +51,9 @@ class ArticlesController < ApplicationController
   end
 
   def require_same_user
-    if current_user != @article.user && !current_user.admin?
-      flash[:alert] = 'You can only edit or delete your own article.'
-      redirect_to @article
-    end
+    return if current_user == @article.user || current_user.admin?
+
+    flash[:alert] = 'You can only edit or delete your own article.'
+    redirect_to @article
   end
 end

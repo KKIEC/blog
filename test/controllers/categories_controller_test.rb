@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -18,7 +18,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create category" do
+  test 'should create category' do
     sign_in_as(@admin_user)
     assert_difference('Category.count', 1) do
       post categories_url, params: { category: { name: 'Travel' } }
@@ -27,7 +27,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to category_url(Category.last)
   end
 
-  test "should not create category if not admin" do
+  test 'should not create category if not admin' do
     assert_no_difference('Category.count') do
       post categories_url, params: { category: { name: 'Travel' } }
     end
