@@ -40,21 +40,40 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test "should get edit" do
-  #   get edit_category_url(@category)
-  #   assert_response :success
-  # end
+  test 'should get edit' do
+    sign_in_as(@admin_user)
+    get edit_category_url(@category)
+    assert_response :success
+  end
 
-  # test "should update category" do
-  #   patch category_url(@category), params: { category: {  } }
-  #   assert_redirected_to category_url(@category)
-  # end
+  test 'should not get edit if not admin' do
+    get edit_category_url(@category)
+    assert_redirected_to categories_url
+  end
 
-  # test "should destroy category" do
-  #   assert_difference('Category.count', -1) do
-  #     delete category_url(@category)
-  #   end
+  test 'should update category' do
+    sign_in_as(@admin_user)
+    patch category_url(@category), params: { category: { name: 'Travel' } }
+    assert_redirected_to category_url(@category)
+  end
 
-  #   assert_redirected_to categories_url
-  # end
+  test 'should not update category if not admin' do
+    patch category_url(@category), params: { category: { name: 'Travel' } }
+    assert_not @category.name == 'Travel'
+  end
+
+  test 'should destroy category' do
+    sign_in_as(@admin_user)
+    assert_difference('Category.count', -1) do
+      delete category_url(@category)
+    end
+
+    assert_redirected_to categories_url
+  end
+
+  test 'should not destroy category if not admin' do
+    assert_no_difference('Category.count') do
+      delete category_url(@category)
+    end
+  end
 end
