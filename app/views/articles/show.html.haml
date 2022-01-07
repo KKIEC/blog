@@ -9,6 +9,9 @@
           by
           = @article.user.username if @article.user
           = link_to gravatar_for(@article.user), user_path(@article.user)
+          - if @article.categories.any?
+            %div.mt-2
+              = render @article.categories
 
         %div.card-body
           %div.card-text.text-left

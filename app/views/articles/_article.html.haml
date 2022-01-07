@@ -7,7 +7,9 @@
             - if article.user
               by
               = link_to article.user.username, user_path(article.user)
-
+            - if article.categories.any?
+              %div.mt-2
+                = render article.categories
           %div.card-body
             %h5.card-title
               = link_to article.title, article_path(article), class: "text-success"
