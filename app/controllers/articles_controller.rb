@@ -3,10 +3,17 @@ class ArticlesController < ApplicationController
   before_action :require_user, except: %i[show index]
   before_action :require_same_user, only: %i[edit update destroy]
 
-  def show; end
+  def show
+    if @article.premium? && current_user.subscription_status != 'active'
+      redirect_to articles_path, alert: "#{@article.title} is available only for premium subscribers."
+  end
 
   def index
-    @articles = Article.paginate(page: params[:page], per_page: 5)
+    if current_user.subscription_status == 'active'
+      @articles = Article.paginate(page: params[:page], per_page: 5)
+    else
+      @article = Article.free.paginate(page: params[:page], per_page: 5)
+    end
   end
 
   def new
@@ -47,7 +54,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :description, category_ids: [])
+    params.require(:article).permit(:title, :description, category_ids: [], :premium)
   end
 
   def require_same_user

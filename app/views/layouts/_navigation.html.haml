@@ -34,8 +34,16 @@
             = current_user.username
             ]
           %div.dropdown-menu{ "aria-labelledby" => "navbarDropdown" }
+            %div.dropdown-item
+              Plan:
+              = current_user.plan || 'free'
+              %br
+              Status:
+              = current_user.subscription_status
+            %hr
             = link_to 'View your profile', user_path(current_user), class: "dropdown-item"
             = link_to 'Edit your profile', edit_user_path(current_user), class: "dropdown-item"
+            %hr
             = link_to 'Delete profile', user_path(current_user), class: "dropdown-item text-danger", method: :delete, data: { confirm: "Are you sure?" }
 
         %li.nav-item
