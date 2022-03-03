@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_03_165919) do
+ActiveRecord::Schema.define(version: 2022_03_03_180717) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer "article_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2022_03_03_165919) do
     t.boolean "admin", default: false
     t.string "plan"
     t.string "subscription_status", default: "incomplete"
+    t.string "stripe_customer_id"
   end
 
 end

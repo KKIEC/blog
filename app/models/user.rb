@@ -10,4 +10,13 @@ class User < ApplicationRecord
                     length: { maximum: 105 },
                     format: { with: VALID_EMAIL_REGEX }
   has_secure_password
+
+  def to_s
+    email
+  end
+
+  after_create do
+    customer = Stripe::Customer.create(email: self.email)
+    update(stripe_customer_id: customer.id)
+  end
 end
