@@ -6,13 +6,14 @@ class ArticlesController < ApplicationController
   def show
     if @article.premium? && current_user.subscription_status != 'active'
       redirect_to articles_path, alert: "#{@article.title} is available only for premium subscribers."
+    end
   end
 
   def index
     if current_user.subscription_status == 'active'
       @articles = Article.paginate(page: params[:page], per_page: 5)
     else
-      @article = Article.free.paginate(page: params[:page], per_page: 5)
+      @articles = Article.free.paginate(page: params[:page], per_page: 5)
     end
   end
 
@@ -54,7 +55,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :description, category_ids: [], :premium)
+    params.require(:article).permit(:title, :description, category_ids: [])
   end
 
   def require_same_user

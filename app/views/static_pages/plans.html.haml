@@ -1,0 +1,11 @@
+%div
+  - @plans.each do |plan|
+    = plan.product.name
+    = plan.unit_amount/100
+    = plan.currency
+    = plan.recurring.interval
+    = link_to 'Checkout', checkout_create_path(price: plan.id), method: :post, remote: true
+    <br>
+
+%div
+  = link_to 'Billing Portal', billing_portal_create_path, method: :post

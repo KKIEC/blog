@@ -41,18 +41,20 @@
               Status:
               = current_user.subscription_status
             %hr
-            = link_to 'View your profile', user_path(current_user), class: "dropdown-item"
-            = link_to 'Edit your profile', edit_user_path(current_user), class: "dropdown-item"
+              = link_to 'Plans list', plans_path, class: 'dropdown-item'
             %hr
-            = link_to 'Delete profile', user_path(current_user), class: "dropdown-item text-danger", method: :delete, data: { confirm: "Are you sure?" }
+            = link_to 'View your profile', user_path(current_user), class: 'dropdown-item'
+            = link_to 'Edit your profile', edit_user_path(current_user), class: 'dropdown-item'
+            %hr
+            = link_to 'Delete profile', user_path(current_user), class: 'dropdown-item text-danger', method: :delete, data: { confirm: 'Are you sure?' }
 
         %li.nav-item
-          = link_to 'Logout', logout_path, class: "nav-link", method: :delete
+          = link_to 'Logout', logout_path, class: 'nav-link', method: :delete
       - else
         %li.nav-item
-          = link_to 'Log in', login_path, class: "nav-link"
+          = link_to 'Log in', login_path, class: 'nav-link'
         %li.nav-item
-          = link_to 'Sign up', signup_path, class: "nav-link"
+          = link_to 'Sign up', signup_path, class: 'nav-link'
 
     %form.form-inline.my-2.my-lg-0
       %input.form-control.mr-sm-2{ type: "search", placeholder: "Search", "aria-label" => "Search" }
