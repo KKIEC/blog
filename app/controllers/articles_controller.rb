@@ -5,16 +5,12 @@ class ArticlesController < ApplicationController
 
   def show
     if @article.premium? && current_user.subscription_status != 'active'
-      redirect_to articles_path, alert: "#{@article.title} is available only for premium subscribers."
+      redirect_to articles_path, alert: 'It is content only for premium subscribers.'
     end
   end
 
   def index
-    if current_user.subscription_status == 'active'
-      @articles = Article.paginate(page: params[:page], per_page: 5)
-    else
-      @articles = Article.free.paginate(page: params[:page], per_page: 5)
-    end
+    @articles = Article.all
   end
 
   def new

@@ -6,6 +6,7 @@ class Article < ApplicationRecord
   validates :description, presence: true, length: { minimum: 10, maximum: 300 }
 
   scope :free, -> { where(premium: false) }
+  scope :premium, -> { where(premium: true) }
 
   def to_s
     title
