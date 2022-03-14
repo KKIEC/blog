@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   resources :categories
 
-  get 'plans', to: 'static_pages#plans'
+  get 'plans', to: 'pages#plans'
   post 'checkout/create', to: 'checkout#create', as: 'checkout_create'
   post 'billing_portal/create', to: 'billing_portal#create', as: 'billing_portal_create'
   post 'webhooks', to: 'webhooks#create'

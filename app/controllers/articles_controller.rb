@@ -4,13 +4,11 @@ class ArticlesController < ApplicationController
   before_action :require_same_user, only: %i[edit update destroy]
 
   def show
-    if @article.premium? && current_user.subscription_status != 'active'
-      redirect_to articles_path, alert: 'It is content only for premium subscribers.'
-    end
+    premium_article_check(@article)
   end
 
   def index
-    @articles = Article.all
+    @articles = Article.paginate(page: params[:page], per_page: 3)
   end
 
   def new
@@ -59,5 +57,19 @@ class ArticlesController < ApplicationController
 
     flash[:alert] = 'You can only edit or delete your own article.'
     redirect_to @article
+  end
+
+  def premium_user_check
+    return true if !!current_user && (current_user.subscription_status == 'active' || current_user.admin?)
+  end
+
+  def premium_article_check(article)
+    if article.premium?
+      if premium_user_check || article.user == current_user
+        return
+      else
+        redirect_to articles_path, alert: 'It is content only for premium subscribers.'
+      end
+    end
   end
 end
