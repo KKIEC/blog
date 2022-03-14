@@ -1,4 +1,5 @@
 class CheckoutController < ApplicationController
+  before_action :require_user
 
   def create
     @session = Stripe::Checkout::Session.create({

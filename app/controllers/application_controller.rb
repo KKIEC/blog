@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  helper_method :premium_user_check
 
   # this will make these methods available for views also
   helper_method :current_user, :logged_in?
@@ -15,5 +16,9 @@ class ApplicationController < ActionController::Base
 
     flash[:alert] = 'You must be logged in to perform that action.'
     redirect_to login_path
+  end
+
+  def premium_user_check
+    return true if !!current_user && (current_user.subscription_status == 'active' || current_user.admin?)
   end
 end

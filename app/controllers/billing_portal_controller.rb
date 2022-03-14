@@ -1,4 +1,5 @@
 class BillingPortalController < ApplicationController
+  before_action :require_user
 
   def create
     portal_session = Stripe::BillingPortal::Session.create({

@@ -59,10 +59,6 @@ class ArticlesController < ApplicationController
     redirect_to @article
   end
 
-  def premium_user_check
-    return true if !!current_user && (current_user.subscription_status == 'active' || current_user.admin?)
-  end
-
   def premium_article_check(article)
     if article.premium?
       if premium_user_check || article.user == current_user

@@ -15,7 +15,14 @@
               = link_to article.title, article_path(article), class: "text-success"
             %p.card-text
               = truncate(article.description, length: 100)
-            = link_to 'View', article_path(article), class: "btn btn-outline-success"
+            - if !article.premium?
+              = link_to 'View', article_path(article), class: "btn btn-outline-success"
+            - else
+              - if premium_user_check
+                = link_to 'View', article_path(article), class: "btn btn-outline-success"
+              - else
+                %div.border.border-5.border-secondary.rounded-3
+                  Login and activate premium for get full access.
             - if logged_in? && (article.user == current_user || current_user.admin?)
               = link_to 'Edit', edit_article_path(article), class: "btn btn-outline-info"
               = link_to 'Delete', article_path(article), class: "btn btn-outline-danger",
