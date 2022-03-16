@@ -1,9 +1,9 @@
-%h2.text-center.mt-4
+%h3.text-center.mt-4
   = @article.title
 
 %div.container
   %div.row.justify-content-md-center
-    %div.col-8.mt-4
+    %div.col-sm-8.mt-4
       %div.card.text-center.shadow.mb-5.bg-white.rounded
         %div.card-header.font-italic
           by
@@ -14,11 +14,11 @@
               = render @article.categories
 
         %div.card-body
-          %div.card-text.text-left
+          %div.card-text.text-justify
             = simple_format(@article.description)
           - if logged_in? && (@article.user == current_user || current_user.admin?)
-            = link_to 'Edit', edit_article_path(@article), class: "btn btn-outline-info"
-            = link_to 'Delete', article_path(@article), class: "btn btn-outline-danger",
+            = link_to 'Edit', edit_article_path(@article), class: "btn btn-outline-info m-1"
+            = link_to 'Delete', article_path(@article), class: "btn btn-outline-danger m-1",
             method: :delete, data: { confirm: "Are you sure?" }
 
         %div.card-footer.text-muted

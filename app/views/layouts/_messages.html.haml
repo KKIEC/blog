@@ -1,7 +1,6 @@
-%div.container
-  - flash.each do |name, msg|
-    = content_tag(:div, class: "alert alert-#{ name == "notice" ? "success" : "danger" } alert-dismissible fade show", role: "alert") do
-      = msg
-      %button.close{ type: "button", "data-dismiss" => "alert", "aria-label" => "Close" }
-        %span{ "aria-hidden" => "true" }
-          &times;
+- flash.each do |name, msg|
+  = content_tag(:div, class: "alert alert-#{ name == "notice" ? "success" : "danger" } alert-dismissible fade show", role: "alert") do
+    = msg
+    %button.close{ type: "button", "data-dismiss" => "alert", "aria-label" => "Close" }
+      %span{ "aria-hidden" => "true" }
+        &times;

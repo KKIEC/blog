@@ -1,6 +1,13 @@
-%nav.navbar.navbar-expand-lg.navbar-light.bg-light
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
   = link_to "KK-BLOG", root_path, class: "navbar-brand", id: "logo"
-  %button.navbar-toggler{ type: "button", "data-toggle" => "collapse", "data-target" => "#navbarSupportedContent", "aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation"}
+  %button.navbar-toggler{
+    type: "button",
+    "data-toggle" => "collapse",
+    "data-target" => "#navbarSupportedContent",
+    "aria-controls" => "navbarSupportedContent",
+    "aria-expanded" => "false",
+    "aria-label" => "Toggle navigation"
+    }
     %span.navbar-toggler-icon
 
   %div.collapse.navbar-collapse{ id: "navbarSupportedContent" }
@@ -15,8 +22,6 @@
           = link_to 'View articles', articles_path, class: "dropdown-item"
           - if logged_in?
             = link_to 'Create new article', new_article_path, class: "dropdown-item"
-          %div.dropdown-divider
-          %a.dropdown-item{ href: "#" } Something else here
 
       %li.nav-item.dropdown
         %a.nav-link.dropdown-toggle{ href: "#", id: "navbarDropdown", role: "button", "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "false" }
@@ -40,9 +45,9 @@
               %br
               Status:
               = current_user.subscription_status
-            %hr
+            %hr.dropdown-divider
               = link_to 'Plans list', plans_path, class: 'dropdown-item'
-            %hr
+            %hr.dropdown-divider
             = link_to 'View your profile', user_path(current_user), class: 'dropdown-item'
             = link_to 'Edit your profile', edit_user_path(current_user), class: 'dropdown-item'
             %hr
@@ -56,6 +61,6 @@
         %li.nav-item
           = link_to 'Sign up', signup_path, class: 'nav-link'
 
-    %form.form-inline.my-2.my-lg-0
-      %input.form-control.mr-sm-2{ type: "search", placeholder: "Search", "aria-label" => "Search" }
-      %button.btn.btn-outline-success.my-2.my-sm-0{ type: "submit" } Search
+    = form_with url: search_index_path, method: :get, class: 'd-flex' do |f|
+      = f.text_field :search, class: 'form-control mr-2', placeholder: 'Search'
+      = f.submit 'Search', name: nil, class: 'btn btn-outline-success'
