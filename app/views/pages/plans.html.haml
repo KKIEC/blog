@@ -1,11 +1,29 @@
-%div
+%div.row.justify-content-center
   - @plans.each do |plan|
-    = plan.product.name
-    = plan.unit_amount/100
-    = plan.currency
-    = plan.recurring.interval
-    = link_to 'Checkout', checkout_create_path(price: plan.id), method: :post, remote: true
-    <br>
+    %div.col-sm-4.m-3
+      %div.card.shadow.bg-white.rounded
+        %div.card-header.text-center.font-italic
+          = plan.product.name.upcase
+          (
+          = plan.unit_amount/100
+          = plan.currency.upcase + '/' + plan.recurring.interval
+          )
+        %div.card-body.text-center
+          Unlimited access for premium articles.
+        %div.card-footer.text-right
+          = link_to 'Checkout',
+            checkout_create_path(price: plan.id),
+            method: :post,
+            remote: true,
+            class: 'btn btn-outline-success'
 
-%div
-  = link_to 'Billing Portal', billing_portal_create_path, method: :post
+%div.row.justify-content-center
+  %div.col-sm-8.m-3
+    %div.card.shadow.bg-white.rounded
+      %div.card-header.text-left.font-italic
+        If you need to change existing subscription, check your:
+      %div.card-body.text-center
+        = link_to 'Billing Portal',
+          billing_portal_create_path,
+          method: :post,
+          class: 'btn btn-outline-info'

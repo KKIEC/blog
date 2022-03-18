@@ -21,7 +21,7 @@ It contains following features:
   - Payment and premium content:
     - Stripe checkout, billing portal and webhooks
   - Styling: (to be modified acc. "mobile first" rule)
-    - bootstrap classes
+    - bootstrap 4 classes
     - with own custom css
     - pagination (will_paginate)
     - gravatar for bloggers
