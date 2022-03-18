@@ -1,4 +1,4 @@
-- if current_user.subscription_status == 'active'
+- if current_user.subscription_status != 'active'
   %div.row.justify-content-center
     - @plans.each do |plan|
       %div.col-sm-4.m-3
