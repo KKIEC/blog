@@ -18,4 +18,10 @@ class User < ApplicationRecord
   after_create do
     customer = Stripe::Customer.create(email: self.email)
   end
+
+  def self.search(query)
+    return all.order('username ASC') if query.blank?
+
+    where('LOWER(username) LIKE ?', "%#{query.downcase}%").order('username ASC')
+  end
 end

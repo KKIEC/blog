@@ -4,4 +4,10 @@ class Category < ApplicationRecord
   validates :name, presence: true,
                     uniqueness: true,
                     length: { minimum: 3, maximum: 25 }
+
+  def self.search(query)
+    return all.order('name ASC') if query.blank?
+
+    where('LOWER(name) LIKE ?', "%#{query.downcase}%").order('name ASC')
+  end
 end

@@ -1,0 +1,68 @@
+%h2.text-center.mt-4
+  Articles:
+
+- if @articles.any?
+  = render 'articles/article'
+- else
+  %div.text-center.mb-4.text-danger.font-weight-bold
+    No matches.
+
+%h2.text-center
+  Categories:
+
+- if @categories.any?
+  %div.container
+    - @categories.each do |category|
+      %div.row.justify-content-center
+        %div.col-sm-8.mt-2
+          %div.card.text-center.shadow.mb-5.bg-white.rounded
+
+            %div.card-body
+              %h5.card-title
+                = link_to category.name, category_path(category), class: "text-success"
+              %p.card-text
+                = pluralize(category.articles.count, 'article')
+
+            %div.card-footer.text-muted
+              %small
+                Created
+                = time_ago_in_words(category.created_at)
+                ago, edited
+                = time_ago_in_words(category.updated_at)
+                ago.
+- else
+  %div.text-center.mb-4.text-danger.font-weight-bold
+    No matches.
+
+%h2.text-center
+  Bloggers:
+
+- if @users.any?
+  %div.container
+    - @users.each do |user|
+      %div.row.justify-content-center
+        %div.col-sm-8.mt-4
+          %div.card.text-center.shadow.mb-5.bg-white.rounded
+            %div.card-header.font-italic
+              = link_to user.username, user
+
+            %div.card-body
+              = link_to gravatar_for(user, size: 150), user
+              %p.card-text.mt-2
+                = pluralize(user.articles.count, 'article')
+              = link_to 'View profile', user, class: "btn btn-outline-success m-1"
+              - if logged_in?
+                - if user == current_user
+                  = link_to 'Edit profile', edit_user_path(user), class: "btn btn-outline-info m-1"
+                - if current_user.admin?
+                  = link_to 'Delete user', user_path(user), class: "btn btn-outline-danger m-1", method: :delete,
+                  data: { confirm: "Are you sure you want to delete the user account and all associated articles?" }
+
+            %div.card-footer.text-muted
+              %small
+                Joined
+                = time_ago_in_words(user.created_at)
+                ago
+- else
+  %div.text-center.mb-4.text-danger.font-weight-bold
+    No matches.

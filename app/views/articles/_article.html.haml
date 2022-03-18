@@ -21,7 +21,7 @@
               - if premium_user_check
                 = link_to 'View', article_path(article), class: "btn btn-outline-success m-1"
               - else
-                %div.border.border-5.border-secondary.rounded-3.m-1
+                %div.border.border-5.border-danger.rounded-3.m-1.text-danger
                   Login and activate premium for get full access.
             - if logged_in? && (article.user == current_user || current_user.admin?)
               = link_to 'Edit', edit_article_path(article), class: "btn btn-outline-info"

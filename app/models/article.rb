@@ -11,4 +11,10 @@ class Article < ApplicationRecord
   def to_s
     title
   end
+
+  def self.search(query)
+    return all.order('title ASC') if query.blank?
+
+    where('LOWER(title) LIKE ?', "%#{query.downcase}%").order('title ASC')
+  end
 end
