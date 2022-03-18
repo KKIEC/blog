@@ -60,12 +60,10 @@ class ArticlesController < ApplicationController
   end
 
   def premium_article_check(article)
-    if article.premium?
-      if premium_user_check || article.user == current_user
-        return
-      else
-        redirect_to articles_path, alert: 'It is content only for premium subscribers.'
-      end
-    end
+    return unless article.premium?
+
+    return if premium_user_check || article.user == current_user
+
+    redirect_to articles_path, alert: 'It is content only for premium subscribers.'
   end
 end

@@ -10,7 +10,7 @@ class WebhooksController < ApplicationController
       event = Stripe::Webhook.construct_event(
         payload, sig_header, Rails.application.credentials.dig(:stripe, :webhook)
       )
-    rescue JSON::ParserError => e
+    rescue JSON::ParserError
       status 400
       return
     rescue Stripe::SignatureVerificationError => e
@@ -20,7 +20,12 @@ class WebhooksController < ApplicationController
       return
     end
 
-    # Handle the event
+    event_handler(event)
+
+    render json: { message: 'success' }
+  end
+
+  def event_handler(event)
     case event.type
     when 'customer.created'
       customer = event.data.object
@@ -30,15 +35,19 @@ class WebhooksController < ApplicationController
       session = event.data.object
       @user = User.find_by(stripe_customer_id: session.customer)
       @user.update(subscription_status: 'active')
-    when 'customer.subscription.updated', 'customer.subscription.deleted', 'customer.subscription.created'
-      subscription = event.data.object
-      @user = User.find_by(stripe_customer_id: subscription.customer)
-      @user.update(
-        subscription_status: subscription.status,
-        plan: subscription.items.data[0].price.lookup_key,
-      )
+    when 'customer.subscription.updated',
+          'customer.subscription.deleted',
+          'customer.subscription.created'
+      subscription_handler(event)
     end
+  end
 
-    render json: { message: 'success' }
+  def subscription_handler(event)
+    subscription = event.data.object
+    @user = User.find_by(stripe_customer_id: subscription.customer)
+    @user.update(
+      subscription_status: subscription.status,
+      plan: subscription.items.data[0].price.lookup_key
+    )
   end
 end

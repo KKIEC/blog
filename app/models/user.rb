@@ -16,7 +16,7 @@ class User < ApplicationRecord
   end
 
   after_create do
-    customer = Stripe::Customer.create(email: self.email)
+    Stripe::Customer.create(email: email)
   end
 
   def self.search(query)

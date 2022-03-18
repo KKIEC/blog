@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
   end
 
   def premium_user_check
-    return true if !!current_user && (current_user.subscription_status == 'active' || current_user.admin?)
+    return true if !!current_user && condition2
+  end
+
+  def condition2
+    (current_user.subscription_status == 'active' || current_user.admin?)
   end
 end
