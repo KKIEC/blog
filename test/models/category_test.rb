@@ -31,4 +31,11 @@ class CategoryTest < ActiveSupport::TestCase
     assert_not @category.valid?
   end
 
+  test 'search should return only category2' do
+    @category.save
+    @category2 = Category.create(name: 'AAbbCC')
+    categories = Category.search('aBBc')
+    assert_equal( @category2, categories.first)
+    assert_equal( 1, categories.count)
+  end
 end

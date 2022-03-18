@@ -20,15 +20,17 @@ It contains following features:
     - from scratch
   - Payment and premium content:
     - Stripe checkout, billing portal and webhooks
-  - Styling: (to be modified acc. "mobile first" rule)
+  - Styling:
     - bootstrap 4 classes
     - with own custom css
     - pagination (will_paginate)
     - gravatar for bloggers
-    - erb and haml views
+    - erb, ejs and haml views
   - Code quality:
     - rubocop-rails
   - Testing:
-    - rails 6 assertions (to be implemented)
-    - factory_bot_rails (to be implemented)
+    - rails 6 assertions
+    - model tests
+    - controller tests
+    - examples for system and integration tests
     - byebug
