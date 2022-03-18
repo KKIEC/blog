@@ -1,37 +1,41 @@
 %div.container
-  - @articles.each do |article|
-    %div.row.justify-content-center
-      %div.col-sm-8.mt-4
-        %div.card.text-center.shadow.mb-5.bg-white.rounded
-          %div.card-header.font-italic
-            - if article.user
-              by
-              = link_to article.user.username, user_path(article.user)
-            - if article.categories.any?
-              %div.mt-2
-                = render article.categories
-          %div.card-body
-            %h5.card-title
-              = link_to article.title, article_path(article), class: "text-success m-1"
-            %p.card-text
-              = truncate(article.description, length: 100)
-            - if !article.premium?
-              = link_to 'View', article_path(article), class: "btn btn-outline-success m-1"
-            - else
-              - if premium_user_check
+  - if @articles.any?
+    - @articles.each do |article|
+      %div.row.justify-content-center
+        %div.col-sm-8.mt-4
+          %div.card.text-center.shadow.mb-5.bg-white.rounded
+            %div.card-header.font-italic
+              - if article.user
+                by
+                = link_to article.user.username, user_path(article.user)
+              - if article.categories.any?
+                %div.mt-2
+                  = render article.categories
+            %div.card-body
+              %h5.card-title
+                = link_to article.title, article_path(article), class: "text-success m-1"
+              %p.card-text
+                = truncate(article.description, length: 100)
+              - if !article.premium?
                 = link_to 'View', article_path(article), class: "btn btn-outline-success m-1"
               - else
-                %div.border.border-5.border-danger.rounded-3.m-1.text-danger
-                  Login and activate premium for get full access.
-            - if logged_in? && (article.user == current_user || current_user.admin?)
-              = link_to 'Edit', edit_article_path(article), class: "btn btn-outline-info"
-              = link_to 'Delete', article_path(article), class: "btn btn-outline-danger",
-                method: :delete, data: { confirm: "Are you sure?" }
+                - if premium_user_check
+                  = link_to 'View', article_path(article), class: "btn btn-outline-success m-1"
+                - else
+                  %div.border.border-5.border-danger.rounded-3.m-1.text-danger
+                    Login and activate premium for get full access.
+              - if logged_in? && (article.user == current_user || current_user.admin?)
+                = link_to 'Edit', edit_article_path(article), class: "btn btn-outline-info"
+                = link_to 'Delete', article_path(article), class: "btn btn-outline-danger",
+                  method: :delete, data: { confirm: "Are you sure?" }
 
-          %div.card-footer.text-muted
-            %small
-              Created
-              = time_ago_in_words(article.created_at)
-              ago, edited
-              = time_ago_in_words(article.updated_at)
-              ago.
+            %div.card-footer.text-muted
+              %small
+                Created
+                = time_ago_in_words(article.created_at)
+                ago, edited
+                = time_ago_in_words(article.updated_at)
+                ago.
+  - else
+    %div.text-center.mb-4.font-weight-bold
+      None.

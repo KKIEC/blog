@@ -1,21 +1,22 @@
-%div.row.justify-content-center
-  - @plans.each do |plan|
-    %div.col-sm-4.m-3
-      %div.card.shadow.bg-white.rounded
-        %div.card-header.text-center.font-italic
-          = plan.product.name.upcase
-          (
-          = plan.unit_amount/100
-          = plan.currency.upcase + '/' + plan.recurring.interval
-          )
-        %div.card-body.text-center
-          Unlimited access for premium articles.
-        %div.card-footer.text-right
-          = link_to 'Checkout',
-            checkout_create_path(price: plan.id),
-            method: :post,
-            remote: true,
-            class: 'btn btn-outline-success'
+- if current_user.subscription_status == 'active'
+  %div.row.justify-content-center
+    - @plans.each do |plan|
+      %div.col-sm-4.m-3
+        %div.card.shadow.bg-white.rounded
+          %div.card-header.text-center.font-italic
+            = plan.product.name.upcase
+            (
+            = plan.unit_amount/100
+            = plan.currency.upcase + '/' + plan.recurring.interval
+            )
+          %div.card-body.text-center
+            Unlimited access for premium articles.
+          %div.card-footer.text-right
+            = link_to 'Checkout',
+              checkout_create_path(price: plan.id),
+              method: :post,
+              remote: true,
+              class: 'btn btn-outline-success'
 
 %div.row.justify-content-center
   %div.col-sm-8.m-3
