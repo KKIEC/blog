@@ -35,7 +35,7 @@ class CategoryTest < ActiveSupport::TestCase
     @category.save
     @category2 = Category.create(name: 'AAbbCC')
     categories = Category.search('aBBc')
-    assert_equal( @category2, categories.first)
-    assert_equal( 1, categories.count)
+    assert_equal(@category2, categories.first)
+    assert_equal(1, categories.count)
   end
 end

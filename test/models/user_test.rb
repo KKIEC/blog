@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
   def setup
     @user = User.new(
       username: 'testuser',
@@ -56,13 +58,12 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'email should not be too long' do
-    @user.email = 'example@' + ('a' * 106) + '.com'
+    @user.email = "example@#{'a' * 106}.com"
     assert_not @user.valid?
   end
 
   test 'should be in accordance with REGEX' do
-    VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-    assert_match(VALID_EMAIL_REGEX , @user.email)
+    assert_match(VALID_EMAIL_REGEX, @user.email)
   end
 
   test 'to_s should be ovveriden and refer to user email' do
@@ -77,7 +78,7 @@ class UserTest < ActiveSupport::TestCase
       password: 'xxxxxxxx'
     )
     users = User.search('aBBc')
-    assert_equal( @user2, users.first)
-    assert_equal( 1, users.count)
+    assert_equal(@user2, users.first)
+    assert_equal(1, users.count)
   end
 end

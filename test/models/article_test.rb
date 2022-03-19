@@ -63,7 +63,7 @@ class ArticleTest < ActiveSupport::TestCase
       premium: [true, false].sample
     )
     articles = Article.search('aBBc')
-    assert_equal( @article2, articles.first)
-    assert_equal( 1, articles.count)
+    assert_equal(@article2, articles.first)
+    assert_equal(1, articles.count)
   end
 end

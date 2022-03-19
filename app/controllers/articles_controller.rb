@@ -1,11 +1,10 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: %i[show edit update destroy]
+  prepend_before_action :set_article, only: %i[show edit update destroy]
   before_action :require_user, except: %i[show index]
   before_action :require_same_user, only: %i[edit update destroy]
+  before_action :premium_article_check, only: %i[show]
 
-  def show
-    premium_article_check(@article)
-  end
+  def show; end
 
   def index
     @articles = Article.paginate(page: params[:page], per_page: 3)
@@ -59,11 +58,12 @@ class ArticlesController < ApplicationController
     redirect_to @article
   end
 
-  def premium_article_check(article)
-    return unless article.premium?
+  def premium_article_check
+    return unless @article.premium?
 
-    return if premium_user_check || article.user == current_user
+    return if premium_user_check || @article.user == current_user
 
-    redirect_to articles_path, alert: 'It is content only for premium subscribers.'
+    flash[:alert] = 'It is content only for premium subscribers.'
+    redirect_to articles_path
   end
 end
