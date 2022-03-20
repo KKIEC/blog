@@ -49,11 +49,12 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@admin_user)
     patch category_url(@category), params: { category: { name: 'Travel' } }
     assert_redirected_to category_url(@category)
+    assert Category.where(name: 'Travel').any?
   end
 
   test 'should not update category if not admin' do
     patch category_url(@category), params: { category: { name: 'Travel' } }
-    assert_not @category.name == 'Travel'
+    assert_not Category.where(name: 'Travel').any?
   end
 
   test 'should get index' do

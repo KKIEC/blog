@@ -117,18 +117,20 @@ class ArtcilesControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@admin_user)
     patch article_url(@article), params: { article: @article_valid_params }
     assert_redirected_to article_url(@article)
+    assert Article.where(@article_valid_params).any?
   end
 
   test 'should update article when author' do
     sign_in_as(@author)
     patch article_url(@article), params: { article: @article_valid_params }
     assert_redirected_to article_url(@article)
+    assert Article.where(@article_valid_params).any?
   end
 
   test 'should not update category if not admin or author' do
     sign_in_as(@user)
-    patch article_url(@article), params: { title: 'Modified' }
-    assert_not @article.title == 'Modified'
+    patch article_url(@article), params: { article: @article_valid_params }
+    assert_not Article.where(@article_valid_params).any?
   end
 
   test 'should destroy article when admin' do

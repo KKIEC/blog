@@ -1,8 +1,7 @@
 class ApplicationController < ActionController::Base
   helper_method :premium_user_check
-
-  # this will make these methods available for views also
   helper_method :current_user, :logged_in?
+
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
